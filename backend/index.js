@@ -1,67 +1,27 @@
-const express = require('express');
-const server = express();
-const cors = require('cors');
+import express from 'express'
+import mongodb from 'mongodb'
 
-const ObjectId = require('mongodb').ObjectId;
+import setRoutes from './routes.js'
+import inject from './ioc.js'
 
-server.use(cors());
-server.use(express.json());
+const startServer = (conn) => {
+    inject(conn);
 
-let mongoConn;
+    const server = express();
+    setRoutes(express, server)
 
-const MongoDB = require('mongodb').MongoClient
-MongoDB
-    .connect("mongodb+srv://devmonk:1234@cluster0.xnbim.mongodb.net",  { useUnifiedTopology: true } )
-    .then(conn => {
-        mongoConn = conn;
-        console.log("mongo is connected ;)")
-    })
-    .catch(e => console.log(e))
+    server.listen(
+        process.env.PORT,
+        () => console.log(`server started on port ${process.env.PORT}`))
+}
 
-server.get("/", async (req, resp) =>{
-    try {
-        let db = mongoConn.db("payflow").collection("projetos");
-        let projetos = await db.find().toArray();
-        resp.send(projetos);
-    } catch (error) {
-        resp.status(500).send({
-            error: "An error has ocurred. Please try later"
-        })
-    }
-})
+const stopServer = (e) => {
+    console.log(e);
+    process.exit(-1);
+}
 
-server.post("/", async (req, resp) =>{
-    try {
-        let db = mongoConn.db("payflow").collection("projetos");
-        
-        const projeto = req.body;
-        await db.insertOne(projeto);
-        
-        resp.send(projeto);
-    } catch (error) {
-        resp.status(500).send({
-            error: "An error has ocurred. Please try later"
-        })
-    }
-})
-
-server.delete("/" , async (req, resp) =>{
-    try {
-        let db = mongoConn.db("payflow").collection("projetos");
-        
-        const id = req.headers["id"];
-        const oid = new ObjectId(id);
-
-        const projeto = await db.deleteOne({
-            "_id" : oid 
-        });
-        
-        resp.send(projeto);
-    } catch (error) {
-        resp.status(500).send({
-            error: error
-        })
-    }
-})
-
-server.listen(process.env.PORT, () => console.log("subi"));
+const MongoClient = mongodb.MongoClient;
+MongoClient
+    .connect('mongodb+srv://devmonk:1234@cluster0.xnbim.mongodb.net', { useUnifiedTopology: true })
+    .then(startServer)
+    .catch(stopServer)
