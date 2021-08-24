@@ -15,6 +15,21 @@ export default class ProjectDatabase{
         return await db.insertOne(projeto);
     }
 
+    async switchStatus(id, status){
+        const objectId = ObjectId(id);
+
+        return await db.updateOne(
+            {
+              "_id" : objectId
+            },
+            {
+              $set : {
+                  "encerrado": status
+                }
+            }
+          );
+    }
+
     async deleteProject(id){
         const objectId = ObjectId(id);
 

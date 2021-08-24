@@ -16,6 +16,11 @@ export default class Api{
         return resp.data;
     }
 
+    async switchStatus(req){
+        const resp = await api.put("/alterar-status", req)
+        return resp.data;
+    }
+
     async deleteProject(id) {
         const resp = await api.delete(`/${id}`)
         return resp.data;

@@ -15,6 +15,14 @@ export default class ProjectService{
         return await db.addProject(projeto);
     }
 
+    async switchStatus(projeto){
+        
+        const id = projeto._id;
+        const newStatus = !projeto.encerrado;
+
+        return await db.switchStatus(id, newStatus)
+    }
+
     async deleteProject(id){
         if(id === null){
             throw 'Projeto não encontrado'

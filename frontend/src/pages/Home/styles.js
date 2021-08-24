@@ -10,6 +10,7 @@ export const ProjectBox = styled.div`
   
   display: flex;
   flex-direction: column;
+  gap: 8px 0;
 
   padding: 0 10%;
 

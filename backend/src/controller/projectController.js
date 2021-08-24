@@ -32,6 +32,21 @@ router.post("/", async (req, resp) =>{
     }
 })
 
+router.put("/alterar-status", async (req, resp) =>{
+    try {
+        
+        const projeto = req.body;
+        const projetoAlterado = await service.switchStatus(projeto);
+
+        resp.send(projetoAlterado);
+
+    } catch (e) {
+        resp.status(500).send({
+            error: e
+        })
+    }
+})
+
 router.delete("/" , async (req, resp) =>{
     try {
         

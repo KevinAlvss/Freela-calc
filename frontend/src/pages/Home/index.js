@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useFetch } from "../../context";
 
 import { Header } from "../../components/Header";
 import { Project } from "../../components/Project";
@@ -10,27 +11,29 @@ const api = new Api();
 
 function Home() {
  
-  const [projects, setProjects] = useState([])  
+  const { change } = useFetch();
+  const [projects, setProjects] = useState([]) 
 
   useEffect(() => {
-    const resp = api.listProjects();
 
-    resp.then((a) => {
-        setProjects(a);
-    });
+    async function fetchData(){
+      const resp = await api.listProjects();
+      setProjects(resp)
+    }
 
-  }, [])
+    fetchData()
+  }, [change])
 
   return (
     <Container>
-      <Header />
+      <Header projects = {projects} />
 
       <ProjectBox>
           {projects.map(x => 
-            <Project 
-              nome = {x.nome}
-              diasParaEntrega = {x.diasParaEntrega}
-              horasPordia = {x.horasPordia}
+            <Project
+              key = {x._id}
+              numero = {projects.indexOf(x) + 1} 
+              projeto = {x}
             />
           )}          
       </ProjectBox>
