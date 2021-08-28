@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { useFetch } from "../../context";
 
 import { Header } from "../../components/Header";
@@ -6,23 +6,15 @@ import { Project } from "../../components/Project";
 
 import { Container, ProjectBox } from './styles';
 
-import Api from "../../service/connection";
-const api = new Api();
-
 function Home() {
  
-  const { change } = useFetch();
-  const [projects, setProjects] = useState([]) 
+  const { projects } = useFetch();
+  const { fetchData } = useFetch();
 
   useEffect(() => {
-
-    async function fetchData(){
-      const resp = await api.listProjects();
-      setProjects(resp)
-    }
-
     fetchData()
-  }, [change])
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <Container>

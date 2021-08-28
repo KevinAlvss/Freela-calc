@@ -1,14 +1,28 @@
 import React, { createContext, useContext, useState } from 'react';
+import Api from './service/connection';
 
 export const FetchContext = createContext();
+const api = new Api()
 
 export function FetchProvider({children}){
-    const [change, setChange] = useState(false);
-    
+    const [projects, setProjects] = useState([]);
+
+    async function fetchData(){
+        const resp = await api.listProjects();
+        setProjects(resp)
+    } 
+
+    async function switchStatus(project){
+        await api.switchStatus(project);
+        fetchData()
+    }
+
     return(
         <FetchContext.Provider value={{
-            change,
-            setChange
+            projects,
+            setProjects,
+            fetchData,
+            switchStatus
         }} >
             {children}
         </FetchContext.Provider>
@@ -17,6 +31,6 @@ export function FetchProvider({children}){
 
 export const useFetch = () => {
     const context = useContext(FetchContext);
-    const { change, setChange } = context;
-    return { change, setChange }
+    const { projects, setProjects, fetchData, switchStatus } = context;
+    return { projects, setProjects, fetchData, switchStatus }
 }

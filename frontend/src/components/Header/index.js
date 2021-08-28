@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { Container, Statistics, AddProject, Plus, Button } from './styles';
 
 export function Header({projects}) {
   
-  const [andamento, setAndamento] = useState(0);  
-  const [encerrado, setEncerrado] = useState(0);  
+//   const [andamento, setAndamento] = useState(0);  
+//   const [encerrado, setEncerrado] = useState(0);  
 
   useEffect(()=>{
       function sumStatistics(){
@@ -28,12 +28,12 @@ export function Header({projects}) {
               </div>
 
               <div>
-                  <h2>{andamento}</h2>
+                  <h2>0</h2>
                   Em andamento
               </div>
 
               <div>
-                  <h2>{encerrado}</h2>
+                  <h2>0</h2>
                   Encerrados
               </div>
           </Statistics>

@@ -3,55 +3,48 @@ import { useFetch } from '../../context';
 
 import { Container, NameDiv, StatisitcsDiv, ActionsDiv } from './styles';
 
-import Api from '../../service/connection';
-const api = new Api();
-
 export function Project({projeto, numero}) {
 
-  const { change, setChange } = useFetch()
-
-    function switchStatus(){
-      setChange(!change);
-      return api.switchStatus(projeto);
-    }
+  const { switchStatus } = useFetch()
   
-    return(
-      <Container>
-          <div id="left">
-            <NameDiv>
-            <p>{numero}</p>
-            <h1>{projeto.nome}</h1>
-            </NameDiv>
-            
-            <StatisitcsDiv>
-                
-                <div className="statisitcsChildren">
-                    <p>Prazo</p>
-                    <h2>{projeto.diasParaEntrega} dias para entrega</h2>
-                </div>
-                
-                <div className="statisitcsChildren">
-                    <p>Valor</p>
-                    <h2>R$ {projeto.horasPordia}</h2>
-                </div>
+  function passToContextToSwitchStatus(){
+    switchStatus(projeto)
+  }
 
-            </StatisitcsDiv>
+  return(
+    <Container>
+        <div id="left">
+          <NameDiv>
+          <p>{numero}</p>
+          <h1>{projeto.nome}</h1>
+          </NameDiv>
+          
+          <StatisitcsDiv>
+              
+              <div className="statisitcsChildren">
+                  <p>Prazo</p>
+                  <h2>{projeto.diasParaEntrega} dias para entrega</h2>
+              </div>
+              
+              <div className="statisitcsChildren">
+                  <p>Valor</p>
+                  <h2>R$ {projeto.horasPorDia}</h2>
+              </div>
 
-          </div>
+          </StatisitcsDiv>
 
-          <ActionsDiv>
- 
-            {projeto.encerrado === true ?
-                 
-            <button onClick={switchStatus} className="status encerrado" >Encerrado</button>
+        </div>
 
-            :
-            
-            <button onClick={switchStatus} className="status andamento" >Em andamento</button>
+        <ActionsDiv>
 
-            }
-          </ActionsDiv>
+          {projeto.encerrado === true ?
+          <button onClick={passToContextToSwitchStatus} className="status encerrado" >Encerrado</button>
+          :
+          <button onClick={passToContextToSwitchStatus} className="status andamento" >Em andamento</button>
+          }
 
-      </Container>
+        </ActionsDiv>
+
+    </Container>
   );
 }
