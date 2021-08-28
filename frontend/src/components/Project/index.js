@@ -11,6 +11,8 @@ export function Project({projeto, numero}) {
     switchStatus(projeto)
   }
 
+  const projectPrice = projeto.diasParaEntrega * projeto.horasPorDia * 100
+
   return(
     <Container>
         <div id="left">
@@ -28,7 +30,7 @@ export function Project({projeto, numero}) {
               
               <div className="statisitcsChildren">
                   <p>Valor</p>
-                  <h2>R$ {projeto.horasPorDia}</h2>
+                  <h2>R$ {projectPrice}</h2>
               </div>
 
           </StatisitcsDiv>
