@@ -1,7 +1,9 @@
 import React from 'react';
 import { useFetch } from '../../context';
 
-import { Container, NameDiv, StatisitcsDiv, ActionsDiv } from './styles';
+import { BsPencil, BsTrash } from 'react-icons/bs'
+
+import { Container, NameDiv, StatisitcsDiv, ActionsDiv, IconsDiv, VerbButton } from './styles';
 
 export function Project({projeto, numero}) {
 
@@ -46,6 +48,15 @@ export function Project({projeto, numero}) {
           }
 
         </ActionsDiv>
+
+        <IconsDiv>
+          <VerbButton>
+            <BsPencil size={20} />
+          </VerbButton>
+          <VerbButton>
+            <BsTrash  size={20} />
+          </VerbButton>
+        </IconsDiv>
 
     </Container>
   );

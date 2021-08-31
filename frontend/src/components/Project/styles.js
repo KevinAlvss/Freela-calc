@@ -80,3 +80,19 @@ export const ActionsDiv = styled.div`
     color: #EB3B35;
   }
 `;
+
+export const IconsDiv = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+export const VerbButton = styled.button`
+  border: 1px solid #E1E3E6;
+  border-radius: 5px;
+  background-color: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+`;
