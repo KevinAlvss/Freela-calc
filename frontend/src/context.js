@@ -6,6 +6,7 @@ const api = new Api()
 
 export function FetchProvider({children}){
     const [projects, setProjects] = useState([]);
+    const [ isOpen, setIsOpen ] = useState(false)
 
     async function fetchData(){
         const resp = await api.listProjects();
@@ -22,7 +23,9 @@ export function FetchProvider({children}){
             projects,
             setProjects,
             fetchData,
-            switchStatus
+            switchStatus,
+            isOpen,
+            setIsOpen
         }} >
             {children}
         </FetchContext.Provider>
@@ -31,6 +34,6 @@ export function FetchProvider({children}){
 
 export const useFetch = () => {
     const context = useContext(FetchContext);
-    const { projects, setProjects, fetchData, switchStatus } = context;
-    return { projects, setProjects, fetchData, switchStatus }
+    const { projects, setProjects, fetchData, switchStatus, isOpen, setIsOpen } = context;
+    return { projects, setProjects, fetchData, switchStatus, isOpen, setIsOpen }
 }

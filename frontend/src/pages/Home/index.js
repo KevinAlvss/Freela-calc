@@ -3,6 +3,7 @@ import { useFetch } from "../../context";
 
 import { Header } from "../../components/Header";
 import { Project } from "../../components/Project";
+import { Modal } from "../../components/Modal";
 
 import { Container, ProjectBox } from './styles';
 
@@ -16,8 +17,16 @@ function Home() {
     // eslint-disable-next-line
   }, [])
 
+  const { isOpen } = useFetch()
+
   return (
-    <Container>
+    <>
+    {isOpen 
+      ?
+      <Modal />
+     :
+     null}
+    <Container isOpen={isOpen}>
       <Header projects = {projects} />
 
       <ProjectBox>
@@ -29,7 +38,8 @@ function Home() {
             />
           )}          
       </ProjectBox>
-    </Container>  
+    </Container> 
+    </> 
   );
 }
 

@@ -7,6 +7,7 @@ import { Container, NameDiv, StatisitcsDiv, ActionsDiv, IconsDiv, VerbButton } f
 
 export function Project({projeto, numero}) {
 
+  const { setIsOpen } = useFetch()
   const { switchStatus } = useFetch()
   
   function passToContextToSwitchStatus(){
@@ -16,6 +17,7 @@ export function Project({projeto, numero}) {
   const projectPrice = projeto.diasParaEntrega * projeto.horasPorDia * 100
 
   return(
+    <>
     <Container>
         <div id="left">
           <NameDiv>
@@ -50,7 +52,7 @@ export function Project({projeto, numero}) {
         </ActionsDiv>
 
         <IconsDiv>
-          <VerbButton>
+          <VerbButton onClick={() => setIsOpen(true)}>
             <BsPencil size={20} />
           </VerbButton>
           <VerbButton>
@@ -59,5 +61,6 @@ export function Project({projeto, numero}) {
         </IconsDiv>
 
     </Container>
+    </>
   );
 }
